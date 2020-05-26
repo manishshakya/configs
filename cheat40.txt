@@ -1,0 +1,33 @@
+ Fav  {{{
+| Goto matching pairs    | %      | N
+| A new line below i     | o      | N
+| Undo                   | u      | N
+| Forword word movement  | w      | N
+| Backward word movement | b      | N
+| Save and exit          | zz     | N
+| Goto next tab          | gt     | N
+| Open fold              | zo     | N
+| Close fold             | zc     | N
+| Help                   | <F1>   | N
+| Find Files(CtrlP)      | <F2>   | N
+| X                      | <F3>   | N
+| x                      | <F4>   | N
+| x                      | <F5>   | N
+| x                      | <F6>   | N
+| x                      | <F7>   | N
+| x                      | <F8>   | N
+| x                      | <F9>   | N
+| Vim which key plugin   | <F10>> | N
+| x                      | <F11>  | N
+| Shortcut Notes         | <F12>  | N
+| Cheatsheet             | <L-?>  | N
+| Search (Ack)           | <L-a>  | N
+| Search and Replace)    | <L-r>  | N
+| Search under cursor    | <L-c>  | N
+| Toggle Table mode      | <L-tm> | N
+| Strip white spaces     | <L-s>  | N
+| CtrlP                  | <C-p>  | N
+| Goto previous page     | <C-o>  | N
+| Redo                   | <C-u>  | N
+}}}
+
