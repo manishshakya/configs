@@ -35,7 +35,7 @@ set incsearch
 set hlsearch
 :nnoremap <CR> :nohlsearch<CR><CR>
 :imap jk <Esc>
-
+set backspace=indent,eol,start
 call plug#begin('~/.vim/plugged')
 " vim color schemes
 Plug 'rafi/awesome-vim-colorschemes'
