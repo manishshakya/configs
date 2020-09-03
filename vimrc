@@ -1,7 +1,3 @@
-"if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
-"  set t_Co=256
-"endif
-"set path=$PWD/**,
 set path=.,,**
 set clipboard=unnamed,unnamedplus,autoselect
 set showmode
@@ -10,7 +6,6 @@ set wrap
 set cursorline
 set autoread
 set showmatch
-
 set autoindent
 set smartindent
 
@@ -19,19 +14,24 @@ set tabstop=8
 set expandtab
 set shiftwidth=8
 set softtabstop=8
-set scrolloff=3
+set scrolloff=5
+
 " swp tp files
 set backupdir=~/.tmp
 set directory=~/.tmp
-set termguicolors
+
+"set termguicolors
 " Syntax coloring
 syntax on
+
 " Searching
 set ignorecase
 set smartcase
 set incsearch
 set hlsearch
+
 set backspace=indent,eol,start
+set mouse=vi
 
 call plug#begin('~/.vim/plugged')
 " vim color schemes
@@ -67,76 +67,93 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'lifepillar/vim-cheat40'
 " Simple tab manager
 Plug 'webdevel/tabulous'
+Plug 'ronakg/quickr-cscope.vim'
 call plug#end()
 
 set background=dark
-colorscheme deus
-autocmd VimEnter * nested :call tagbar#autoopen(1)
-set mouse=vi
+colorscheme gruvbox
 
 let g:cheat40_use_default = 0
+let g:quickr_cscope_keymaps = 0
+let g:quickr_cscope_use_qf_g = 1
+let g:quickr_cscope_db_file = $PWD."/cscope.out"
 
-fun! Shortcut()
-        echo "F1 - Help"
-        echo "F2 - Find Files(CtrlP)"
-        echo "F3 - Ack"
-        echo "F4 - Write and Close"
-        echo "F5 - Open File under cursor"
-        echo "F6 - Next Tab"
-        echo "F7 -"
-        echo "F8 -"
-        echo "F9 -"
-        echo "F10 - Vim which key plugin"
-        echo "F11 -"
-        echo "F12 - Shortcut Notes"
+" Tags
+" Use CTRL+] to go to tag
+" Use CTRL+T to go back
+function! Findtag()
+        let cw=expand("<cword>")
+        let cmd=":ltag ".cw
+        execute cmd
+        execute ":lopen"
 endf
+
 " Key Mappings
-nnoremap <f2> :CtrlP<cr>
-nnoremap <f3> :Ack<space>
-nnoremap <f4> :wq<cr>
-nnoremap <f5> <c-w>gf
-nnoremap <f6> gt
-nnoremap <f12> :call shortcut()<cr>
-
-" Leader key mappings
-nnoremap <leader>s :StripWitespace<cr>
-nnoremap <leader>e :NERDTreeToggle<cr>
-nmap <leader>c <Plug>(FerretAckWord)
-
-noremap <Leader>y "*y
-noremap <Leader>p "*p
-noremap <Leader>Y "+y
-noremap <Leader>P "+p
-
 inoremap <c-a> <esc>0i
 inoremap <c-e> <esc>$a
 
 nnoremap <c-a> 0
 nnoremap <c-e> $
-nnoremap <leader>ev :tabedit $MYVIMRC<cr>
+
+nnoremap <leader>1 1gt
+nnoremap <leader>2 2gt
+nnoremap <leader>3 3gt
+nnoremap <leader>4 4gt
+nnoremap <leader>5 5gt
+nnoremap <leader>6 6gt
+nnoremap <leader>7 7gt
+nnoremap <leader>8 8gt
+nnoremap <leader>9 9gt
+
+nnoremap <leader>ay "ay
+nnoremap <leader>ap "ap
+nnoremap <leader>by "by
+nnoremap <leader>bp "bp
+nnoremap <leader>b :Tagbar<cr>
 nnoremap <leader>ec :tabedit $HOME/.vim/cheat40.txt<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>e :NERDTreeToggle<cr>
+nnoremap <leader>ev :tabedit $MYVIMRC<cr>
+nnoremap <leader>nt :tabedit <cr>
 nnoremap <leader>o o<esc>
-"nnoremap <leader>t :let mycurf=expand("<cfile>:p")<cr> :execute(":tabe ". mycurf)<cr>
-
+nnoremap <leader>p "*p
+nnoremap <leader>P "+p
+nnoremap <leader>q :q<cr>
+nnoremap <leader>sw :StripWhitespace<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>t <c-w>gf
-nnoremap <leader>tl :tabs<cr>
-nnoremap <leader>tn :tabn<cr>
-nnoremap <leader>tb :tabb<cr>
-nnoremap <leader>tf :tabfirst<cr>
-nnoremap <leader>t1 1gt
-nnoremap <leader>t2 2gt
-nnoremap <leader>t3 3gt
-nnoremap <leader>t4 4gt
-nnoremap <leader>t5 5gt
-nnoremap <leader>t6 6gt
-nnoremap <leader>t7 7gt
-nnoremap <leader>t8 8gt
-nnoremap <leader>t9 9gt
+nnoremap <leader>w :w<cr>
+nnoremap <leader>y "*y
+nnoremap <leader>Y "+y
+nnoremap <leader>g gg<cr>
+nnoremap <leader>G G<cr>
+nnoremap <leader>fp :CtrlP<cr>
+nnoremap <leader>ft :call Findtag()<cr>
+nnoremap <leader>nh :nohlsearch<cr><cr>
 
-nnoremap <leader>q :q<esc>
-nnoremap <leader>w :w<esc>
-nnoremap <cr> :nohlsearch<cr><cr>
+nmap <leader>fc <Plug>(FerretAckWord)
+
+" Cscope
+" Use CTRL+o to go back
+" Search for all symbol occurances of word under the cursor
+nmap <leader>cs <plug>(quickr_cscope_symbols)
+" Search for global definition of the word under the cursor
+nmap <leader>cg <plug>(quickr_cscope_global)<cr>
+" Search for all callers of the function name under the cursor
+nmap <leader>cc <plug>(quickr_cscope_callers)<cr>
+" Search for all files matching filename under the cursor
+nmap <leader>cf <plug>(quickr_cscope_files)<cr>
+" Search for all files including filename under the cursor
+nmap <leader>ci <plug>(quickr_cscope_includes)<cr>
+" Search for tex matching word under the cursor/visualy selected text
+nmap <leader>ct <plug>(quickr_cscope_text)<cr>
+" Enter an egrep patter for searching
+nmap <leader>ce <plug>(quickr_cscope_egrep)<cr>
+" Search all the functions called by funtion name under the cursor
+nmap <leader>cd <plug>(quickr_cscope_functions)<cr>
+" Search all the places where the symbol under the cursor is assigned a value
+nmap <leader>ca <plug>(quickr_cscope_assignments)<cr>
+
 inoremap jk <esc>
+nnoremap <cr> :nohlsearch<cr><cr>
 cabbrev help tab help
 cabbrev h tab h
