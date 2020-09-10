@@ -36,10 +36,13 @@ set mouse=vi
 call plug#begin('~/.vim/plugged')
 " vim color schemes
 Plug 'rafi/awesome-vim-colorschemes'
+
 " Tag current file
 Plug 'majutsushi/tagbar'
+
 " grep
 Plug 'mhinz/vim-grepper'
+
 " Stripwhite space
 Plug 'ntpeters/vim-better-whitespace'
 " git
@@ -48,25 +51,25 @@ Plug 'tpope/vim-fugitive'
 " Search and Replace multifiles
 Plug 'wincent/ferret'
 Plug 'ctrlpvim/ctrlp.vim'
-" Surround
-Plug 'tpope/vim-surround'
 
 " Status Bar
 Plug 'vim-airline/vim-airline'
+
 " File Explorer
 Plug 'scrooloose/nerdtree'
 Plug 'jlanzarotta/bufexplorer'
 
-Plug 'vim-scripts/gtags.vim'
-Plug 'tpope/vim-unimpaired'
-Plug 'liuchengxu/vim-which-key'
 Plug 'chrisbra/vim-diff-enhanced'
 
 Plug 'dhruvasagar/vim-table-mode'
+
 " Cheat Sheet
 Plug 'lifepillar/vim-cheat40'
+
 " Simple tab manager
 Plug 'webdevel/tabulous'
+
+" cscope
 Plug 'ronakg/quickr-cscope.vim'
 call plug#end()
 
@@ -81,12 +84,18 @@ let g:quickr_cscope_db_file = $PWD."/cscope.out"
 " Tags
 " Use CTRL+] to go to tag
 " Use CTRL+T to go back
-function! Findtag()
+function! FindTag()
         let cw=expand("<cword>")
         let cmd=":ltag ".cw
         execute cmd
         execute ":lopen"
 endf
+
+function! CloseWin()
+        execute ":cclose"
+        execute ":lclose"
+endf
+
 
 " Key Mappings
 inoremap <c-a> <esc>0i
@@ -127,10 +136,17 @@ nnoremap <leader>Y "+y
 nnoremap <leader>g gg<cr>
 nnoremap <leader>G G<cr>
 nnoremap <leader>fp :CtrlP<cr>
-nnoremap <leader>ft :call Findtag()<cr>
+nnoremap <leader>ft :call FindTag()<cr>
+nnoremap <leader>f :call FindTag()<cr>
 nnoremap <leader>nh :nohlsearch<cr><cr>
 
+nnoremap <leader>h <c-w>h
+nnoremap <leader>j <c-w>j
+nnoremap <leader>k <c-w>k
+nnoremap <leader>l <c-w>l
+nnoremap <leader>x :call CloseWin()<cr>
 nmap <leader>fc <Plug>(FerretAckWord)
+nmap <leader>c <Plug>(FerretAckWord)
 
 " Cscope
 " Use CTRL+o to go back
